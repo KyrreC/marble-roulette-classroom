@@ -1,0 +1,28 @@
+{
+  "name": "roulette",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "2.4.4",
+    "@parcel/packager-raw-url": "^2.16.4",
+    "@parcel/transformer-sass": "^2.16.4",
+    "@parcel/transformer-webmanifest": "^2.16.4",
+    "parcel": "^2.16.4",
+    "typescript": "^5.6.3"
+  },
+  "scripts": {
+    "lint": "biome check --fix src/",
+    "lint:check": "biome check src/",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint:check && npm run typecheck",
+    "dev": "parcel index.html --port 1235",
+    "build": "npm run build:online",
+    "build:online": "node scripts/build-site.js online",
+    "build:portable": "node scripts/build-site.js portable",
+    "release:portable": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-portable.ps1",
+    "release": "npm run check && npm run build:online && npm run build:portable && powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-portable.ps1 -SkipBuild"
+  },
+  "dependencies": {
+    "box2d-wasm": "^7.0.0"
+  }
+}

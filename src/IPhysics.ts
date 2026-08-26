@@ -1,0 +1,32 @@
+import type { StageDef } from './data/maps';
+import type { MapEntityState } from './types/MapEntity.type';
+
+export interface IPhysics {
+  init(): Promise<void>;
+
+  clear(): void;
+
+  clearMarbles(): void;
+
+  createStage(stage: StageDef): void;
+
+  createMarble(id: number, x: number, y: number): void;
+
+  shakeMarble(id: number, rescueLevel?: number): void;
+
+  removeMarble(id: number): void;
+
+  getMarblePosition(id: number): { x: number; y: number; angle: number };
+
+  getMarbleMotion(id: number): { x: number; y: number; angle: number; vx: number; vy: number };
+
+  getEntities(): MapEntityState[];
+
+  impact(id: number): void;
+
+  getNudgeCount(): number;
+
+  start(): void;
+
+  step(deltaSeconds: number): void;
+}
