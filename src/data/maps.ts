@@ -1,5 +1,6 @@
 import type { MapEntity } from '../types/MapEntity.type';
 import { chaosFactoryStage } from './maps/chaosFactory';
+import { springCanyonStage } from './maps/springCanyon';
 
 export type AdBoard = {
   x: number;
@@ -3005,4 +3006,6 @@ export const stages: StageDef[] = [
     ],
   },
   chaosFactoryStage,
+  springCanyonStage,
 ];
+

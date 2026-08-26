@@ -243,27 +243,6 @@
     // };
     // setTimeout(checkDonateButtonLoaded, 100);
 
-    const currentNotice = 'classroom-privacy-v1';
-    const noticeKey = 'classroomPrivacyNotice';
-
-    const closeNotice = () => {
-      document.querySelector('#notice').style.display = 'none';
-      sessionStorage.setItem(noticeKey, currentNotice);
-    };
-
-    const openNotice = () => {
-      console.log('openNotice');
-      document.querySelector('#notice').style.display = 'flex';
-    };
-
-    document.querySelector('#closeNotice').addEventListener('click', () => {
-      closeNotice();
-    });
-
-    document.querySelector('#btnNotice').addEventListener('click', () => {
-      openNotice();
-    });
-
     function simpleToast(msg) {
       const toast = document.createElement('div');
       toast.classList.add('toast');
@@ -280,15 +259,6 @@
       }, 1200);
     }
 
-    const checkNotice = () => {
-      const lastViewed = sessionStorage.getItem(noticeKey);
-      console.log('lastViewed', lastViewed);
-      if (lastViewed !== currentNotice) {
-        openNotice();
-      }
-    };
-
-    checkNotice();
   }
 </script>
 <h1 class="sr-only">Marble Roulette - 랜덤 추첨기</h1>
@@ -344,12 +314,8 @@
   </div>
   <div class="left">
     <h3 data-trans>Enter names below</h3>
-    <textarea id="in_names" placeholder="Input names separated by commas or line feed here" data-trans="placeholder">수박*2,키위*2,귤*2</textarea>
+    <textarea id="in_names" placeholder="Input names separated by commas or line feed here" data-trans="placeholder">A*2, B*2, C*2, D*2, E*2</textarea>
     <div class="actions">
-      <button id="btnNotice">
-        <i class="icon megaphone"></i>
-      </button>
-      <div class="sep"></div>
       <button id="btnShuffle">
         <i class="icon shuffle"></i>
         <span data-trans>Shuffle</span>
@@ -361,17 +327,8 @@
     </div>
   </div>
 </div>
-<div id="notice">
-  <h2>课堂隐私说明</h2>
-  <div class="notice-body">
-    <h3>学生姓名只在当前浏览器中处理</h3>
-    <p>本课堂版本不上传姓名，不使用访问统计、广告接口或外部头像接口。关闭浏览器标签后，本次输入的姓名不会由本游戏继续保存。</p>
-  </div>
-  <div class="notice-action">
-    <button id="closeNotice">关闭 / Close</button>
-  </div>
-</div>
 <div class="copyright">Unofficial classroom edition based on <a href="https://github.com/lazygyu/roulette" target="_blank" rel="noopener noreferrer">LazyGyu Marble Roulette</a> · MIT License
 </div>
 </body>
 </html>
+
