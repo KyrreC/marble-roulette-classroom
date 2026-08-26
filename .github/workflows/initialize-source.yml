@@ -34,7 +34,7 @@ jobs:
           cp -a .bootstrap-source/. .
           rm -rf .bootstrap-source source.zip
           rm -f source.zip.part1 source.zip.part2 source.zip.part3
-          rm -f .github/workflows/initialize-source.yml
+          rm -f .github/workflows/deploy.yml
 
       - name: Set up Node.js
         uses: actions/setup-node@v6
