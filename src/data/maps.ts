@@ -3008,4 +3008,3 @@ export const stages: StageDef[] = [
   chaosFactoryStage,
   springCanyonStage,
 ];
-
