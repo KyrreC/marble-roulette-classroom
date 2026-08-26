@@ -27,11 +27,13 @@ jobs:
       - name: Expand verified source archive
         shell: bash
         run: |
+          cat source.zip.part1 source.zip.part2 source.zip.part3 > source.zip
+          echo "15bf64d84a47d58449b9d2d621c25ef01067bc68a2819c6ff5d842a240af1893  source.zip" | sha256sum -c -
           rm -rf .bootstrap-source
-          unzip -q Marble-Roulette-Classroom-GitHub-Source.zip -d .bootstrap-source
+          unzip -q source.zip -d .bootstrap-source
           cp -a .bootstrap-source/. .
-          rm -rf .bootstrap-source
-          rm -f Marble-Roulette-Classroom-GitHub-Source.zip
+          rm -rf .bootstrap-source source.zip
+          rm -f source.zip.part1 source.zip.part2 source.zip.part3
           rm -f .github/workflows/initialize-source.yml
 
       - name: Set up Node.js
