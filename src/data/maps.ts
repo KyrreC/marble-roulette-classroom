@@ -1,4 +1,5 @@
 import type { MapEntity } from '../types/MapEntity.type';
+import { castleMayhemStage } from './maps/castleMayhem';
 import { chaosFactoryStage } from './maps/chaosFactory';
 import { springCanyonStage } from './maps/springCanyon';
 
@@ -3007,4 +3008,5 @@ export const stages: StageDef[] = [
   },
   chaosFactoryStage,
   springCanyonStage,
+  castleMayhemStage,
 ];
