@@ -1,6 +1,8 @@
 import type { MapEntity } from '../types/MapEntity.type';
+import type { StageEffectDef } from '../types/StageEffect.type';
 import { castleMayhemStage } from './maps/castleMayhem';
 import { chaosFactoryStage } from './maps/chaosFactory';
+import { pirateAdventureHarborStage } from './maps/pirateAdventureHarbor';
 import { springCanyonStage } from './maps/springCanyon';
 
 export type AdBoard = {
@@ -22,6 +24,7 @@ export type StageDef = {
     horizontalImpulse: number;
     downwardImpulse: number;
   };
+  effects?: StageEffectDef[];
 };
 
 export const stages: StageDef[] = [
@@ -3009,4 +3012,5 @@ export const stages: StageDef[] = [
   chaosFactoryStage,
   springCanyonStage,
   castleMayhemStage,
+  pirateAdventureHarborStage,
 ];

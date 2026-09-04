@@ -2,6 +2,7 @@ import Box2DFactory from 'box2d-wasm';
 import type { StageDef } from './data/maps';
 import type { IPhysics } from './IPhysics';
 import type { EntityLinearMotion, MapEntity, MapEntityState } from './types/MapEntity.type';
+import type { VectorLike } from './types/VectorLike';
 
 type PhysicsEntity = {
   body: Box2D.b2Body;
@@ -219,6 +220,27 @@ export class Box2dPhysics implements IPhysics {
         body.ApplyLinearImpulseToCenter(distVector, true);
       }
     });
+  }
+
+  applyDirectionalImpulse(
+    region: { x: number; y: number; width: number; height: number },
+    impulse: VectorLike
+  ): number {
+    const minX = region.x - region.width / 2;
+    const maxX = region.x + region.width / 2;
+    const minY = region.y - region.height / 2;
+    const maxY = region.y + region.height / 2;
+    let affectedCount = 0;
+
+    Object.values(this.marbleMap).forEach((body) => {
+      const position = body.GetPosition();
+      if (position.x < minX || position.x > maxX || position.y < minY || position.y > maxY) return;
+
+      body.ApplyLinearImpulseToCenter(new this.Box2D.b2Vec2(impulse.x, impulse.y), true);
+      affectedCount++;
+    });
+
+    return affectedCount;
   }
 
   getNudgeCount(): number {

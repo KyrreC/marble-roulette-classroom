@@ -1,6 +1,7 @@
 import { Camera } from './camera';
 import { canvasHeight, canvasWidth, initialZoom, Skills, Themes, zoomThreshold } from './data/constants';
 import { type StageDef, stages } from './data/maps';
+import { DirectionalBurstEffect } from './directionalBurstEffect';
 import { FastForwader } from './fastForwader';
 import type { GameObject } from './gameObject';
 import type { IPhysics } from './IPhysics';
@@ -40,6 +41,7 @@ export class Roulette extends EventTarget {
   protected _renderer: RouletteRenderer;
 
   private _effects: GameObject[] = [];
+  private _stageEffects: DirectionalBurstEffect[] = [];
 
   private _winnerRank = 0;
   private _totalMarbleCount = 0;
@@ -216,6 +218,9 @@ export class Roulette extends EventTarget {
   private _updateEffects(deltaTime: number) {
     this._effects.forEach((effect) => effect.update(deltaTime));
     this._effects = this._effects.filter((effect) => !effect.isDestroy);
+    if (this._raceStartedAt !== null && this._marbles.length > 0) {
+      this._stageEffects.forEach((effect) => effect.update(deltaTime));
+    }
   }
 
   private _render() {
@@ -227,7 +232,7 @@ export class Roulette extends EventTarget {
       marbles: this._marbles,
       winners: this._winners,
       particleManager: this._particleManager,
-      effects: this._effects,
+      effects: [...this._effects, ...this._stageEffects],
       winnerRank: this._winnerRank,
       winner: this._winner,
       size: { x: this._renderer.width, y: this._renderer.height },
@@ -328,6 +333,22 @@ export class Roulette extends EventTarget {
     }
 
     this.physics.createStage(this._stage);
+    this._stageEffects = (this._stage.effects ?? []).map((effect) => {
+      switch (effect.type) {
+        case 'directionalBurst':
+          return new DirectionalBurstEffect(effect, (definition) =>
+            this.physics.applyDirectionalImpulse(
+              {
+                x: definition.position.x,
+                y: definition.position.y,
+                width: definition.width,
+                height: definition.height,
+              },
+              definition.impulse
+            )
+          );
+      }
+    });
     this._camera.initializePosition();
   }
 
@@ -513,6 +534,7 @@ export class Roulette extends EventTarget {
       })),
       winners: this._winners.map((marble) => ({ id: marble.id, name: marble.name })),
       entities: this.physics.getEntities(),
+      stageEffects: this._stageEffects.map((effect) => effect.getDebugState()),
     };
   }
 

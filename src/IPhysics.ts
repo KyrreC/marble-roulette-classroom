@@ -1,5 +1,6 @@
 import type { StageDef } from './data/maps';
 import type { MapEntityState } from './types/MapEntity.type';
+import type { VectorLike } from './types/VectorLike';
 
 export interface IPhysics {
   init(): Promise<void>;
@@ -23,6 +24,8 @@ export interface IPhysics {
   getEntities(): MapEntityState[];
 
   impact(id: number): void;
+
+  applyDirectionalImpulse(region: { x: number; y: number; width: number; height: number }, impulse: VectorLike): number;
 
   getNudgeCount(): number;
 
